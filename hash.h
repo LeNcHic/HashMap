@@ -142,10 +142,9 @@ namespace lab618
         Функция удаления элемента из Хеш-таблицы. Возвращает false, если не нашлось элемента, true если элемент был удален.
         */
         bool remove(const T& element) {
-          unsigned int idx;
+          unsigned int idx = HashFunc(pElement) % m_tableSize;
           leaf* pre_buff = nullptr;
-          leaf* buff = findLeaf(&element, idx);
-
+          leaf* buff = m_pTable[idx];
           while (buff)
           {
             if (Compare(buff->pData, &element) == 0)
@@ -158,11 +157,9 @@ namespace lab618
               {
                 m_pTable[idx] = buff->pnext;
               }
-
               delete buff;
               return true;
             }
-
             pre_buff = buff;
             buff = buff->pnext;
           }
